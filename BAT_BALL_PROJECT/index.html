@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BAT-BALL-STUMP</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>BAT BALL STUMP GAME</h1>
+
+    <button
+      onclick="
+    let randomValue = Math.random() * 3;
+    let computerChoice;
+    let resultMsg;
+
+    if (randomValue > 0 && randomValue < 1) {
+        computerChoice = 'BAT';
+    } else if (randomValue >= 1 && randomValue < 2) {
+        computerChoice = 'BALL';
+    } else {
+        computerChoice = 'STUMP';
+    }
+
+    if (computerChoice == 'BAT') {
+        resultMsg = 'It\'s a tie';
+    } else if (computerChoice == 'BALL') {
+        resultMsg = 'You won';
+    } else {
+        resultMsg = 'Out';
+    }
+    alert(`You have chosen BAT. Computer has chosen ${computerChoice} and ${resultMsg}`);
+    "
+    >
+      BAT
+    </button>
+
+    <button
+      onclick="
+    let randomValue = Math.random() * 3;
+    let computerChoice;
+    let resultMsg;
+
+    if (randomValue > 0 && randomValue < 1) {
+        computerChoice = 'BAT';
+    } else if (randomValue >= 1 && randomValue < 2) {
+        computerChoice = 'BALL';
+    } else {
+        computerChoice = 'STUMP';
+    }
+
+    if (computerChoice == 'BAT') {
+        resultMsg = 'Out';
+    } else if (computerChoice == 'BALL') {
+        resultMsg = 'It\'s a tie';
+    } else {
+        resultMsg = 'You won';
+    }
+    alert(`You have chosen BALL. Computer has chosen ${computerChoice} and ${resultMsg}`);
+    "
+    >
+      BALL
+    </button>
+
+    <button
+      onclick="
+    let randomValue = Math.random() * 3;
+    let computerChoice;
+    let resultMsg;
+
+    if (randomValue > 0 && randomValue < 1) {
+        computerChoice = 'BAT';
+    } else if (randomValue >= 1 && randomValue < 2) {
+        computerChoice = 'BALL';
+    } else {
+        computerChoice = 'STUMP';
+    }
+
+    if (computerChoice == 'BAT') {
+        resultMsg = 'Back to Pawallion';
+    } else if (computerChoice == 'BALL') {
+        resultMsg = 'Out';
+    } else {
+        resultMsg = 'It\'s tie';
+    }
+    alert(`You have chosen STUMP. Computer has chosen ${computerChoice} and ${resultMsg}`);
+    "
+    >
+      STUMP
+    </button>
+  </body>
+</html>

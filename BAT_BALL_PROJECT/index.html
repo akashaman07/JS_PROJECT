@@ -1,93 +1,126 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>BAT-BALL-STUMP</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <h1>BAT BALL STUMP GAME</h1>
+<head>
+  <title>Cricket Game</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Bat Ball Stump Game</h1>
 
-    <button
-      onclick="
-    let randomValue = Math.random() * 3;
-    let computerChoice;
-    let resultMsg;
+  <button class="choice-button" onclick="
+  let computerChoice = generateComputerChoice();
+  let resultMsg = getResult('Bat', computerChoice);
+  showResult('Bat', computerChoice, resultMsg);
+  ">
+    <img src="images/bat.png" alt="Bat Image" class="choice-image">  
+  </button>
 
-    if (randomValue > 0 && randomValue < 1) {
-        computerChoice = 'BAT';
-    } else if (randomValue >= 1 && randomValue < 2) {
-        computerChoice = 'BALL';
-    } else {
-        computerChoice = 'STUMP';
+  <button class="choice-button" onclick="
+    computerChoice = generateComputerChoice();
+    resultMsg = getResult('Ball', computerChoice);
+    showResult('Ball', computerChoice, resultMsg);
+  ">
+    <img src="images/ball.png" alt="Ball Image" class="choice-image">  
+  </button>
+
+  <button class="choice-button" onclick="
+    computerChoice = generateComputerChoice();
+    resultMsg = getResult('Stump', computerChoice);
+    showResult('Stump', computerChoice, resultMsg);
+  ">
+    <img src="images/stump.png" alt="Stump Image" class="choice-image">
+  </button>
+
+  <h3 id="user-move"></h3>
+  <h3 id="computer-move"></h3>
+  <h3 id="result"></h3>
+  <h3 id="score"></h3>
+
+  <button onclick="localStorage.clear()
+      resetScore();
+  ">Reset</button>
+
+  <script>
+    let scoreStr = localStorage.getItem('Score');
+    let score;
+    resetScore(scoreStr);
+
+    function resetScore(scoreStr) {
+      score = scoreStr ? JSON.parse(scoreStr) : {
+        win: 0,
+        lost: 0,
+        tie: 0,
+      };
+
+      score.displayScore = function() {
+        return `Score:Won:${score.win}, Lost:${score.lost}, Tie: ${score.tie}`;
+      };
+
+      showResult();
     }
 
-    if (computerChoice == 'BAT') {
-        resultMsg = 'It\'s a tie';
-    } else if (computerChoice == 'BALL') {
-        resultMsg = 'You won';
-    } else {
-        resultMsg = 'Out';
-    }
-    alert(`You have chosen BAT. Computer has chosen ${computerChoice} and ${resultMsg}`);
-    "
-    >
-      BAT
-    </button>
-
-    <button
-      onclick="
-    let randomValue = Math.random() * 3;
-    let computerChoice;
-    let resultMsg;
-
-    if (randomValue > 0 && randomValue < 1) {
-        computerChoice = 'BAT';
-    } else if (randomValue >= 1 && randomValue < 2) {
-        computerChoice = 'BALL';
-    } else {
-        computerChoice = 'STUMP';
+    function generateComputerChoice() {
+      //This will generate random number between 0 and 3
+      let randomNumber = Math.random() * 3;
+      if (randomNumber > 0 && randomNumber <= 1) {
+        return 'Bat';
+      } else if (randomNumber > 1 && randomNumber <= 2) {
+        return 'Ball';
+      } else {
+        return 'Stump'
+      }
     }
 
-    if (computerChoice == 'BAT') {
-        resultMsg = 'Out';
-    } else if (computerChoice == 'BALL') {
-        resultMsg = 'It\'s a tie';
-    } else {
-        resultMsg = 'You won';
+    function getResult(userMove, computerMove) {
+      if (userMove === 'Bat') {
+        if (computerMove === 'Ball') {
+          score.win++;
+          return 'User won.';
+        } else if (computerMove === 'Bat') {
+          score.tie++;
+          return `It's a tie`;
+        } else if (computerMove === 'Stump') {
+          score.lost++;
+          return 'Computer has won';
+        }
+      } else if (userMove === 'Ball') {
+        if (computerMove === 'Ball') {
+          score.tie++;
+          return `It's a tie`;
+        } else if (computerMove === 'Bat') {
+          score.lost++;
+          return 'Computer has won';
+        } else if (computerMove === 'Stump') {
+          score.win++;
+          return 'User won.';
+        }
+      } else {
+        if (computerMove === 'Ball') {
+          score.lost++;
+          return 'Computer has won';
+        } else if (computerMove === 'Bat') {
+          score.win++;
+          return 'User won.';
+        } else if (computerMove === 'Stump') {
+          score.tie++;
+          return `It's a tie`;
+        }
+      }
     }
-    alert(`You have chosen BALL. Computer has chosen ${computerChoice} and ${resultMsg}`);
-    "
-    >
-      BALL
-    </button>
 
-    <button
-      onclick="
-    let randomValue = Math.random() * 3;
-    let computerChoice;
-    let resultMsg;
+    function showResult(userMove, computerMove, result) {
+      localStorage.setItem('Score', JSON.stringify(score));
+      
+      document.querySelector('#user-move').innerText = 
+        userMove ? `You have chosen ${userMove}` : '';
+      
+      document.querySelector('#computer-move').innerText =
+        computerMove ? `Computer choice is ${computerMove}` : '';
+      
+      document.querySelector('#result').innerText = result || '';
 
-    if (randomValue > 0 && randomValue < 1) {
-        computerChoice = 'BAT';
-    } else if (randomValue >= 1 && randomValue < 2) {
-        computerChoice = 'BALL';
-    } else {
-        computerChoice = 'STUMP';
+      document.querySelector('#score').innerText = score.displayScore();
     }
-
-    if (computerChoice == 'BAT') {
-        resultMsg = 'Back to Pawallion';
-    } else if (computerChoice == 'BALL') {
-        resultMsg = 'Out';
-    } else {
-        resultMsg = 'It\'s tie';
-    }
-    alert(`You have chosen STUMP. Computer has chosen ${computerChoice} and ${resultMsg}`);
-    "
-    >
-      STUMP
-    </button>
-  </body>
+  </script>
+</body>
 </html>
